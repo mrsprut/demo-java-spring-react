@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.tyaa.demo.java.spring.springbootreactjs.entities.Role;
 import org.tyaa.demo.java.spring.springbootreactjs.entities.User;
+import org.tyaa.demo.java.spring.springbootreactjs.models.RoleModel;
 import org.tyaa.demo.java.spring.springbootreactjs.repositories.RoleHibernateDAO;
 import org.tyaa.demo.java.spring.springbootreactjs.repositories.UserHibernateDAO;
+import org.tyaa.demo.java.spring.springbootreactjs.services.RoleService;
 
 import java.util.List;
 
@@ -16,12 +18,12 @@ import java.util.List;
 public class AuthController {
 
     @Autowired
-    private RoleHibernateDAO roleDAO;
+    private RoleService roleService;
 
     @GetMapping("/roles")
     // @ResponseBody
     // @RequestMapping(path = "/index", method = RequestMethod.GET)
-    public List<Role> getAllRoles() {
-        return roleDAO.findAll();
+    public List<RoleModel> getAllRoles() {
+        return roleService.getAllRoleModel();
     }
 }
