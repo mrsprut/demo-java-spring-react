@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tyaa.demo.java.spring.springbootreactjs.entities.Role;
 import org.tyaa.demo.java.spring.springbootreactjs.entities.User;
@@ -13,6 +14,7 @@ import org.tyaa.demo.java.spring.springbootreactjs.repositories.UserHibernateDAO
 import java.math.BigDecimal;
 
 @SpringBootApplication
+// @ComponentScan({"org.tyaa.demo.java.spring.springbootreactjs.entities"})
 public class SpringbootReactjsApplication {
 
 	public static void main(String[] args) {
