@@ -6,6 +6,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tyaa.demo.java.spring.springbootreactjs.entities.Role;
 import org.tyaa.demo.java.spring.springbootreactjs.models.ResponseModel;
@@ -13,7 +15,7 @@ import org.tyaa.demo.java.spring.springbootreactjs.models.RoleModel;
 import org.tyaa.demo.java.spring.springbootreactjs.repositories.RoleHibernateDAO;
 import org.tyaa.demo.java.spring.springbootreactjs.repositories.UserHibernateDAO;
 import org.tyaa.demo.java.spring.springbootreactjs.services.AuthService;
-import org.tyaa.demo.java.spring.springbootreactjs.services.IAuthService;
+import org.tyaa.demo.java.spring.springbootreactjs.services.interfaces.IAuthService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AuthServiceTest {
     // Внедрение экземпляра UserHibernateDAO
     // для дальнейшего использования службой AuthService
@@ -43,6 +46,8 @@ public class AuthServiceTest {
     // Заглушка на основе класса сущности Role
     ArgumentCaptor<Role> roleArgument =
             ArgumentCaptor.forClass(Role.class);
+    ArgumentCaptor<Long> roleIdArgument =
+            ArgumentCaptor.forClass(Long.class);
     // Тест-кейс, который:
     // 1. обучает интерфейсный макет службы - какой объект должен возвращать ее метод getAllRoles;
     // 2. вызывает тестируемый метод;
@@ -97,5 +102,25 @@ public class AuthServiceTest {
         // что в метод save был передан какой-то аргумент подходящего типа)
         verify(roleDAO, atLeast(1))
                 .save(roleArgument.capture());
+    }
+    @Test
+    void shouldGetRoleUsersSuccessfully() {
+        doReturn(
+                ResponseModel.builder()
+                        .status(ResponseModel.SUCCESS_STATUS)
+                        .data(Arrays.asList(
+                                new RoleModel(1L, "ROLE_DEMO1"),
+                                new RoleModel(2L, "ROLE_DEMO2"),
+                                new RoleModel(3L, "ROLE_DEMO3")))
+                        .build()
+        ).when(authServiceMock)
+                .getRoleUsers(1L);
+        ResponseModel responseModel =
+                authService.getRoleUsers(1L);
+        assertNotNull(responseModel);
+        // assertEquals(ResponseModel.SUCCESS_STATUS, responseModel.getStatus());  // how to create or
+        verify(roleDAO, atLeast(1))
+                .findById(roleIdArgument.capture()); //
+
     }
 }
