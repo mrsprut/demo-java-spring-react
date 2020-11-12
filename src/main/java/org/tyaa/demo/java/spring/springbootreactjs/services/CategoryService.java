@@ -29,7 +29,7 @@ public class CategoryService {
             Category.builder().name(categoryModel.getName().trim()).build();
         categoryDao.save(category);
         // Demo Logging
-        // System.out.println(String.format("Category %s Created", category.getName()));
+        System.out.println(String.format("Category %s Created", category.getName()));
         return ResponseModel.builder()
             .status(ResponseModel.SUCCESS_STATUS)
             .message(String.format("Category %s Created", category.getName()))
