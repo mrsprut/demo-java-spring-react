@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
-import {Provider} from "mobx-react"
+import {Provider} from 'mobx-react'
 // экземпляр CommonStore экспортируется из модуля
 // по умолчанию
 // поэтому здесь импортируется без фигурных скобок
@@ -17,6 +17,7 @@ import cartStore from "./stores/CartStore" */
 
 import commonStore from './stores/CommonStore'
 import routerStore from './stores/RouterStore'
+import userStore from './stores/UserStore'
 
 /* const stores = {
     commonStore,
@@ -29,7 +30,8 @@ import routerStore from './stores/RouterStore'
 
 const stores = {
     commonStore,
-    routerStore
+    routerStore,
+    userStore
 }
 
 ReactDOM.render(
@@ -38,9 +40,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 )
-
-/*
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-)*/

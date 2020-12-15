@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {
     Router,
-    Route,
-    Redirect
+    Route
 } from 'react-router-dom'
 import {CommonStore} from 'app/stores/CommonStore'
 import {RouterStore} from 'app/stores/RouterStore'
