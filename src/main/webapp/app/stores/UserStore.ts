@@ -133,7 +133,7 @@ class UserStore {
         // запрос на пользовательскую конечную точку /api/auth/user
         // REST-контроллера AuthController
         // с передачей имени и пароля пользователя для регистрации
-        fetch('api/auth/user', {
+        fetch('api/auth/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

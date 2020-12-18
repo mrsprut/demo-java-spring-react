@@ -84,7 +84,7 @@ public class AuthController {
         );
     }
 
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<ResponseModel> deleteUser(@PathVariable Long id) {
         return new ResponseEntity<>(authService.deleteUser(id), HttpStatus.NO_CONTENT);
     }
