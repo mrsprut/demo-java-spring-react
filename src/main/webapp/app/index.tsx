@@ -18,6 +18,7 @@ import cartStore from "./stores/CartStore" */
 import commonStore from './stores/CommonStore'
 import routerStore from './stores/RouterStore'
 import userStore from './stores/UserStore'
+import categoryStore from "./stores/CategoryStore"
 
 /* const stores = {
     commonStore,
@@ -31,7 +32,8 @@ import userStore from './stores/UserStore'
 const stores = {
     commonStore,
     routerStore,
-    userStore
+    userStore,
+    categoryStore
 }
 
 ReactDOM.render(

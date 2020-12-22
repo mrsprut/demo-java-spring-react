@@ -28,7 +28,7 @@ class CategoryStore {
     @action fetchCategories() {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/simplespa/api/categories',{
+        fetch('api/categories',{
             method: 'GET'
         }).then((response) => {
             return response.json()
@@ -63,7 +63,7 @@ class CategoryStore {
     @action add () {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/simplespa/api/category',{
+        fetch('api/category',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ class CategoryStore {
     @action update () {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch(`/simplespa/api/category/${this.currentCategory.id}`,{
+        fetch(`api/category/${this.currentCategory.id}`,{
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ class CategoryStore {
     @action deleteCategory() {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/simplespa/api/category/' + this.currentCategoryId,{
+        fetch('api/category/' + this.currentCategoryId,{
             method: 'DELETE'
         }).then((response) => {
             return response.json()
