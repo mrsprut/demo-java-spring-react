@@ -28,7 +28,7 @@ class CategoryStore {
     @action fetchCategories() {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/springreact/api/categories',{
+        fetch(commonStore.basename + '/api/categories',{
             method: 'GET'
         }).then((response) => {
             return response.json()
@@ -63,7 +63,7 @@ class CategoryStore {
     @action add () {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/springreact/api/category',{
+        fetch(commonStore.basename + '/api/category',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ class CategoryStore {
     @action update () {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch(`/springreact/api/category/${this.currentCategory.id}`,{
+        fetch(`${commonStore.basename}/api/category/${this.currentCategory.id}`,{
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ class CategoryStore {
     @action deleteCategory() {
         commonStore.clearError()
         commonStore.setLoading(true)
-        fetch('/springreact/api/category/' + this.currentCategoryId,{
+        fetch(commonStore.basename + '/api/category/' + this.currentCategoryId,{
             method: 'DELETE'
         }).then((response) => {
             return response.json()
