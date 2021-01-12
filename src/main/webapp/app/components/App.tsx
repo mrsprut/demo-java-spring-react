@@ -12,6 +12,7 @@ import {inject, observer} from 'mobx-react'
 import {CSSTransition} from 'react-transition-group'
 import AppBarCollapse from "../components/common/AppBarCollapse";
 import {reaction} from "mobx";
+import Modal from "@material-ui/core/Modal";
 
 interface IProps extends WithStyles<typeof styles> {
     commonStore: CommonStore,
@@ -45,6 +46,34 @@ const styles = theme =>
         navBar: {
             color: '#fff',
             backgroundColor: '#ee6e73',
+        },
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        modalContent: {
+            /* position: 'absolute',
+            top: `5%`,
+            left: `5%`, */
+            /* alignItems: 'center',
+            justifyContent: 'center', */
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+        cartModalContent: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+        closeButton: {
+            cursor:'pointer',
+            float:'right',
+            marginTop: '-80px',
+            marginRight: '-25px',
         }
     })
 
@@ -92,6 +121,10 @@ class App extends Component<IProps, IState> {
         }
     )
 
+    handleErrorModalClose = (e) => {
+        this.props.commonStore.setError(null)
+    }
+
     render () {
         const { routes } = this.props.routerStore
         const { classes } = this.props
@@ -124,6 +157,17 @@ class App extends Component<IProps, IState> {
                             </Route>
                         ))}
                     </Container>
+                    <Modal
+                        open={ !!this.props.commonStore.error }
+                        onClose={ this.handleErrorModalClose }
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        className={classes.modal}
+                    >
+                        <div className={classes.modalContent}>
+                            {this.props.commonStore.error}
+                        </div>
+                    </Modal>
                 </div>
             </Router>
         )

@@ -91,6 +91,8 @@ class UserStore {
             // если в объекте отклика код статуса равен 200
             if (statusCode == this.HTTP_STATUS_OK) {
                 this.check()
+            } else {
+                commonStore.setError("Login or password is wrong")
             }
         }).catch((error) => {
             // установка в переменную хранилища сообщения об ошибке

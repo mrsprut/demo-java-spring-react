@@ -94,6 +94,7 @@ class SignIn extends Component<IProps, IState> {
                             >
                                 <div>
                                     <TextField
+                                        id='username'
                                         label='Login'
                                         value={userName}
                                         onChange={this.handleUserNameChange}
@@ -101,6 +102,7 @@ class SignIn extends Component<IProps, IState> {
                                 </div>
                                 <div>
                                     <TextField
+                                        id='password'
                                         label='Password'
                                         value={password}
                                         type="password"
@@ -109,6 +111,7 @@ class SignIn extends Component<IProps, IState> {
                                 </div>
                                 <div>
                                     <Button
+                                        id='signInButton'
                                         variant='outlined'
                                         disabled={loading}
                                         onClick={this.handleSubmitForm}
