@@ -22,7 +22,7 @@ class ProductStore {
     @observable priceTo: number = null
     @observable quantityFrom: number = null
     @observable quantityTo: number = null
-    @observable categories: Array<number> = []
+    @observable categories: Array<BigInteger> = []
     // цельная строка - значение url-параметра search
     @observable searchString: string = ''
     @observable priceFromBound: number = 0
@@ -220,8 +220,8 @@ class ProductStore {
 
     // установка содержимого списка идентификаторов категорий
     // для фильтра
-    @action setFilerDataCategory(id: number, isChecked: boolean) {
-        // пытаемся найти из имеющегося списка идентификатор категории,
+    @action setFilerDataCategory(id: BigInteger, isChecked: boolean) {
+        // пытаемся найти из имеющегося списка идентификаторов идентификатор категории,
         // состояние выбора которой сейчас изменилось
         const categoryId =
             this.categories.find(categoryId => categoryId === id)

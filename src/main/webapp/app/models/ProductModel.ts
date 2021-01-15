@@ -1,5 +1,5 @@
 export default class ProductModel {
-    public id: number
+    public id: BigInteger
     public title: string
     public description: string
     public quantity: number
