@@ -164,7 +164,7 @@ class App extends Component<IProps, IState> {
                         aria-describedby="simple-modal-description"
                         className={classes.modal}
                     >
-                        <div className={classes.modalContent}>
+                        <div id='errorBlock' className={classes.modalContent}>
                             {this.props.commonStore.error}
                         </div>
                     </Modal>

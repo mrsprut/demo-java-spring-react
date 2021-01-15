@@ -11,7 +11,7 @@ public class SignInPage extends AbstractPage {
     private By loginField = By.id("username");
     private By passwordField = By.id("password");
     private By signInButton = By.cssSelector("#signInButton");
-    private By errorParagraph = By.cssSelector(".error");
+    private By errorParagraph = By.cssSelector("#errorBlock");
 
     public SignInPage(WebDriver driver) {
         super(driver);
@@ -45,6 +45,7 @@ public class SignInPage extends AbstractPage {
     public String getErrorText() {
         List<WebElement> errorParagraphElement =
                 driver.findElements(errorParagraph);
+        System.out.println(errorParagraphElement);
         return !errorParagraphElement.isEmpty() ? errorParagraphElement.get(0).getText() : null;
     }
 }
