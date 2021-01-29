@@ -20,6 +20,7 @@ import routerStore from './stores/RouterStore'
 import userStore from './stores/UserStore'
 import categoryStore from './stores/CategoryStore'
 import productStore from './stores/ProductStore'
+import cartStore from './stores/CartStore'
 
 /* const stores = {
     commonStore,
@@ -35,7 +36,8 @@ const stores = {
     routerStore,
     userStore,
     categoryStore,
-    productStore
+    productStore,
+    cartStore
 }
 
 ReactDOM.render(

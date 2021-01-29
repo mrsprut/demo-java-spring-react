@@ -1,5 +1,5 @@
 export default class UserModel {
-    private name: string
+    public name: string
     public roleName: String
     constructor (name, roleName) {
         this.name = name

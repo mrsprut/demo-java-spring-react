@@ -1,4 +1,4 @@
-import {action, observable, reaction} from 'mobx'
+import {action, makeObservable, observable, reaction} from 'mobx'
 import userStore from './UserStore'
 import Home from '../components/pages/Home'
 import Shopping from '../components/pages/Shopping'
@@ -29,7 +29,7 @@ class RouterStore {
         { path: '/auth:out', name: 'Sign out', Component: Home }
     ]
 
-    private adminRoutes: Array<object> = [
+    private adminRoutes: Array<RouteModel> = [
         { path: '/', name: 'Home', Component: Home },
         { path: '/shopping', name: 'Shopping', Component: Shopping },
         { path: '/admin', name: 'Dashboard', Component: Dashboard },
@@ -41,6 +41,10 @@ class RouterStore {
     // наблюдаемый текущий список роутов
     // (по умолчнию - для гостя)
     @observable routes: Array<RouteModel> = this.anonymousRoutes
+
+    constructor() {
+        makeObservable(this)
+    }
 
     // установить в качестве текущего список роутов для гостя
     @action setAnonymousRoutes() {

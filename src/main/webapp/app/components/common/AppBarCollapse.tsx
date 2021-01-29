@@ -1,23 +1,25 @@
 import React, {Component} from "react"
-import {Icon, MenuItem, WithStyles} from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import {Icon, MenuItem} from "@material-ui/core"
+import { WithStyles, withStyles, Theme, makeStyles } from "@material-ui/core/styles"
 import ButtonAppBarCollapse from "./ButtonAppBarCollapse"
 import {
     NavLink
 } from 'react-router-dom'
-import {observer} from "mobx-react"
+import {inject, observer} from "mobx-react"
 import {UserStore} from '../../stores/UserStore'
+import {CartStore} from "../../stores/CartStore"
 import RouteModel from "../../models/RouteModel"
 
 interface IProps extends WithStyles<typeof styles> {
     routes: Array<RouteModel>,
-    userStore: UserStore
+    userStore: UserStore,
+    cartStore: CartStore
 }
 
 interface IState {
 }
 
-const styles = theme => ({
+const styles = ((theme: Theme) => ({
     root: {
         position: "absolute",
         right: 0,
@@ -51,14 +53,27 @@ const styles = theme => ({
     },
     mobileButtonBarItemActive: {
         backgroundColor: '#ccc',
+    },
+    shoppingCart: {
+        marginRight: '10px'
     }
-})
+}))
 
+@inject('cartStore', 'userStore')
 @observer
 class AppBarCollapse extends Component<IProps, IState> {
 
     constructor(props) {
         super(props)
+    }
+
+    // обработчик события "клик по иконе корзины" - переключатель видимости корзины
+    handleCartIconClick = (e) => {
+        if (this.props.cartStore.cartShown) {
+            this.props.cartStore.setCartVisibility(false)
+        } else {
+            this.props.cartStore.setCartVisibility(true)
+        }
     }
 
     render() {
@@ -119,6 +134,13 @@ class AppBarCollapse extends Component<IProps, IState> {
                             return ''
                         }
                     })}
+                </div>
+                <div className={classes.shoppingCart} style={{display: this.props.userStore.user ? 'inline' : 'none' }}>
+                    <Icon
+                        onClick={this.handleCartIconClick}
+                    >
+                        shopping_cart
+                    </Icon> {this.props.cartStore.cartItemsCount} ({this.props.cartStore.cartItemsTotalPrice})
                 </div>
             </div>
         )

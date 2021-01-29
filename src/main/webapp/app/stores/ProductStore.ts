@@ -1,4 +1,4 @@
-import {action, computed, observable} from 'mobx'
+import {action, computed, makeObservable, observable} from 'mobx'
 import Product from '../models/ProductModel'
 import commonStore from './CommonStore'
 import history from '../history'
@@ -29,6 +29,11 @@ class ProductStore {
     @observable priceToBound: number = 1000000
     @observable quantityFromBound: number = 0
     @observable quantityToBound: number = 1000000
+
+    constructor() {
+        makeObservable(this)
+    }
+
     // получение отфильтрованных отсортированных товаров с сервера
     @action fetchFilteredProducts () {
         commonStore.clearError()

@@ -1,4 +1,4 @@
-import {action, observable} from "mobx"
+import {action, makeObservable, observable} from "mobx"
 import Category from '../models/CategoryModel'
 import commonStore from './CommonStore'
 // import User from "app/models/UserModel";
@@ -12,6 +12,10 @@ class CategoryStore {
     @observable currentCategory: Category = new Category()
     @observable currentCategoryId: BigInteger = null
     @observable categories: Array<Category> = []
+
+    constructor() {
+        makeObservable(this)
+    }
 
     @action setCategoryName(name: string) {
         this.currentCategory.name = name

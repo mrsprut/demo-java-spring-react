@@ -1,6 +1,7 @@
-import {action, observable} from "mobx"
+import {action, makeObservable, observable} from "mobx"
 import User from '../models/UserModel'
 import commonStore from './CommonStore'
+import RouteModel from "app/models/RouteModel";
 
 class UserStore {
 
@@ -12,6 +13,10 @@ class UserStore {
     @observable userName: string = ''
     // password input
     @observable password: string = ''
+
+    constructor() {
+        makeObservable(this)
+    }
 
     @action setUser(user: User) {
         this.user = user

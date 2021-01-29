@@ -1,10 +1,14 @@
-import {action, observable} from 'mobx'
+import {action, makeObservable, observable} from 'mobx'
 
 class CommonStore {
 
     @observable loading: boolean = false
     @observable error: string = null
     @observable basename: string = '/springreact'
+
+    constructor() {
+        makeObservable(this)
+    }
 
     @action setLoading(loading: boolean): void {
         this.loading = loading
