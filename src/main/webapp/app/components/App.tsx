@@ -3,27 +3,38 @@ import {
     Router,
     Route
 } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import commonStore, {CommonStore} from '../stores/CommonStore'
 import {RouterStore} from '../stores/RouterStore'
 import {UserStore} from '../stores/UserStore'
 import {CartStore} from '../stores/CartStore'
 import history from '../history'
-import {AppBar, Button, Container, Grid, Icon, IconButton, Toolbar, Typography} from '@material-ui/core'
+import {AppBar, Button, Container, Grid, Icon, IconButton, Snackbar, Toolbar, Typography} from '@material-ui/core'
 import {Theme, withStyles, WithStyles, makeStyles} from '@material-ui/core/styles'
 import {inject, observer} from 'mobx-react'
 import {CSSTransition} from 'react-transition-group'
 import AppBarCollapse from "../components/common/AppBarCollapse";
 import {reaction} from "mobx";
 import Modal from "@material-ui/core/Modal";
+import {Alert, Color} from "@material-ui/lab";
 
-interface IProps extends WithStyles<typeof styles> {
+interface MatchParams {
+    payment_success: string,
+    payment_cancel: string
+}
+
+interface IProps extends WithStyles<typeof styles>, RouteComponentProps<MatchParams> {
     commonStore: CommonStore,
     routerStore: RouterStore,
     userStore: UserStore,
     cartStore: CartStore
 }
 
-interface IState {}
+interface IState {
+    snackBarVisibility: boolean,
+    snackBarText: string,
+    snackBarSeverity: Color
+}
 
 // получаем готовые стили темы material-ui
 const styles = ((theme: Theme) =>
@@ -83,8 +94,14 @@ const styles = ((theme: Theme) =>
 @inject('routerStore', 'commonStore', 'userStore', 'cartStore')
 @observer
 class App extends Component<IProps, IState> {
+
     constructor(props) {
         super(props)
+        this.state = {
+            snackBarVisibility: false,
+            snackBarText: '',
+            snackBarSeverity: 'success'
+        }
     }
 
     // установка обработчика события изменения значения
@@ -136,6 +153,28 @@ class App extends Component<IProps, IState> {
 
     handleCartModalClose = (e) => {
         this.props.cartStore.setCartVisibility(false)
+    }
+
+    handleSnackBarClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({snackBarVisibility: false})
+        this.setState({snackBarSeverity: 'success'})
+    }
+
+    componentDidMount() {
+        this.props.userStore.check()
+        console.log(history)
+        if (this.props.match && this.props.match.params.payment_success) {
+            this.setState({snackBarText: 'Payment successful'})
+            this.setState({snackBarSeverity: 'success'})
+            this.setState({snackBarVisibility: true})
+        } else if (this.props.match && this.props.match.params.payment_cancel) {
+            this.setState({snackBarText: 'Payment canceled'})
+            this.setState({snackBarSeverity: 'info'})
+            this.setState({snackBarVisibility: true})
+        }
     }
 
     render () {
@@ -259,6 +298,13 @@ class App extends Component<IProps, IState> {
                             </div>
                         </div>
                     </Modal>
+                    <Snackbar
+                        open={this.state.snackBarVisibility}
+                        autoHideDuration={6000} onClose={this.handleSnackBarClose}>
+                        <Alert onClose={this.handleSnackBarClose} severity={this.state.snackBarSeverity}>
+                            {this.state.snackBarText}
+                        </Alert>
+                    </Snackbar>
                 </div>
             </Router>
         )

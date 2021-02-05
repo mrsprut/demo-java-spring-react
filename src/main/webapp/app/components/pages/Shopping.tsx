@@ -16,7 +16,7 @@ import {inject, observer} from "mobx-react"
 import {CommonStore} from "../../stores/CommonStore"
 import {ProductStore} from "../../stores/ProductStore"
 import {CategoryStore} from "../../stores/CategoryStore"
-// import {CartStore} from "../../stores/CartStore"
+import {CartStore} from "../../stores/CartStore"
 import {UserStore} from '../../stores/UserStore'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
@@ -30,7 +30,7 @@ interface IProps extends WithStyles<typeof styles> {
     commonStore: CommonStore,
     productStore: ProductStore,
     categoryStore: CategoryStore,
-    // cartStore: CartStore,
+    cartStore: CartStore,
     userStore: UserStore
 }
 
@@ -78,7 +78,7 @@ const styles = theme =>
         }
     })
 
-@inject('commonStore', 'productStore', 'categoryStore', /*'cartStore', */ 'userStore')
+@inject('commonStore', 'productStore', 'categoryStore', 'cartStore', 'userStore')
 @observer
 class Shopping extends Component<IProps, IState> {
 
@@ -201,12 +201,12 @@ class Shopping extends Component<IProps, IState> {
         this.setState({ activeOrderButton: buttonName })
     }
 
-    /* handleAddToCart = (e, productId) => {
+    handleAddToCart = (e, productId) => {
         this.props.cartStore.addToCart(productId, () => {
             this.setState({snackBarText: 'One item added to Your cart'})
             this.setState({snackBarVisibility: true})
         })
-    } */
+    }
 
     handleSnackBarClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
@@ -409,16 +409,15 @@ class Shopping extends Component<IProps, IState> {
                                     {/*<Button size="small" color="primary">
                                         Share
                                     </Button>*/}
-                                    {/*<Button
+                                    <Button
                                         size="small"
                                         color="primary"
-                                        data-product-id={product.id}
                                         onClick={(e) => {
                                             this.handleAddToCart(e, product.id)
                                         }}
                                         style={{display: this.props.userStore.user ? 'inline' : 'none' }}>
                                         Add to cart
-                                    </Button>*/}
+                                    </Button>
                                 </CardActions>
                             </Card>
                         </Grid>
