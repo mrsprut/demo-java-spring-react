@@ -148,7 +148,19 @@ class App extends Component<IProps, IState> {
     }
 
     handleCartItemPlus = (e, productId) => {
-        this.props.cartStore.addToCart(productId, () => {})
+        this.props.cartStore.addToCart(productId, () => {
+            this.setState({snackBarText: 'One product added to the cart'})
+            this.setState({snackBarSeverity: 'success'})
+            this.setState({snackBarVisibility: true})
+        })
+    }
+
+    handleCartItemNeg = (e, productId) => {
+        this.props.cartStore.subtractFromCart(productId, () => {
+            this.setState({snackBarText: 'One product was subtracted from the cart'})
+            this.setState({snackBarSeverity: 'success'})
+            this.setState({snackBarVisibility: true})
+        })
     }
 
     handleCartModalClose = (e) => {
@@ -268,7 +280,7 @@ class App extends Component<IProps, IState> {
                                                             <Grid item xs={3} >
                                                                 <Button
                                                                     onClick={(e) => {
-                                                                        // this.handleCartItemPlus(e, item.productId)
+                                                                        this.handleCartItemNeg(e, item.productId)
                                                                     }}>
                                                                     <Icon>exposure_neg_1</Icon>
                                                                 </Button>

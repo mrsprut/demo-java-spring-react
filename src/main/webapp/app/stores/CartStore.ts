@@ -91,6 +91,32 @@ class CartStore {
         }))
     }
 
+    @action subtractFromCart(productId: number, notifySuccess: () => void) {
+        commonStore.clearError()
+        commonStore.setLoading(true)
+        fetch(`${commonStore.basename}/api/cart/` + productId,{
+            method: 'PATCH'
+        }).then((response) => {
+            return response.json()
+        }).then(responseModel => {
+            if (responseModel) {
+                if (responseModel.status === 'success') {
+                    // запрос на получение всех элементов с сервера
+                    this.fetchCartItems()
+                    // уведомление пользователя об успехе
+                    notifySuccess()
+                } else if (responseModel.status === 'fail') {
+                    commonStore.setError(responseModel.message)
+                }
+            }
+        }).catch((error) => {
+            commonStore.setError(error.message)
+            throw error
+        }).finally(action(() => {
+            commonStore.setLoading(false)
+        }))
+    }
+
     /* @action getPurchaseButton(givePurchaseButtonHtml: (htmlText: string) => void) {
         commonStore.clearError()
         commonStore.setLoading(true)
